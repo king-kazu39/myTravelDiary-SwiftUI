@@ -43,21 +43,21 @@ struct SearchMapView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .top) {
-            
-            MapView(landmarks: landmarks)
-            
-            TextField("Search", text: $search, onEditingChanged:{_ in }) {
-                self.getNearByLandmarks()
-            }.textFieldStyle(RoundedBorderTextFieldStyle())
-            .padding()
+        NavigationView {
+            ZStack(alignment: .top) {
+                
+                MapView(landmarks: landmarks)
+                
+                TextField("Search", text: $search, onEditingChanged:{_ in }) {
+                    self.getNearByLandmarks()
+                }.textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
                 .offset(y: 44)
-            
-            PlaceListView(landmarks: self.landmarks){
-                // on tap
-                self.tapped.toggle()
-            }.animation(.spring())
-                .offset(y: calculateOffset())
+                
+                CategoryRow(categoryName: search, items: landmarks)
+                    .offset(y: UIScreen.main.bounds.height - 350)
+            }
+            .navigationBarTitle("Search", displayMode: .inline)
         }
     }
 }
